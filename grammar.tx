@@ -13,7 +13,7 @@ ModelElement:
 ;
 
 DataType:
-    textField = TextField | charField = CharField
+    textField = TextField | charField = CharField | emailField = EmailField | website = URLField | foreignkey = ForeignKey
 ;
 
 TextField:
@@ -22,6 +22,17 @@ TextField:
 
 CharField:
     'CharField' '(' parameters *= Parameter[','] ')'
+;
+EmailField:
+    'EmailField' '(' parameters *= Parameter[','] ')'
+;
+
+URLField:
+    'URLField' '(' parameters *= Parameter[','] ')'
+;
+
+ForeignKey:
+    'ForeignKey' '(' 'model' '=' model = ID ')'
 ;
 
 Parameter:

@@ -4,8 +4,8 @@ import pydot, os
 
 
 def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
-    '''U svrhe brzeg testiranja, metoda koja prima putanju do foldera, naziv fajla gde je gramatika i naziv fajla gde je 
-        primer programa u nasem jeziku i indikator da li da se eksportuju .dot i .png fajlovi'''
+    '''U svrhe brzeg testiranja, metoda koja prima putanju do foldera, naziv fajla gdje je gramatika i naziv fajla gdje je 
+        primjer programa u nasem jeziku i indikator da li da se eksportuju .dot i .png fajlovi'''
 
     meta_path = os.path.join(path, grammar_file_name)
     meta_name = os.path.splitext(meta_path)[0]
@@ -27,9 +27,34 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         graph = pydot.graph_from_dot_file(model_name + '.dot')
         # graph[0].write_png(model_name + '.png')
 
-    print model.models[0].elements[1].name
+
+    def function(model):
+        string = 'from django.views import generic\nfrom django.views.generic.edit import CreateView, UpdateView, DeleteView\nfrom django.core.urlresolvers import reverse_lazy, reverse\n'
+        string += '\n'
+        for m in model:
+            string += 'from .models import ' + m.name + '\n'
+
+        for m in model:
+            string += '\n'
+            string += 'class ' + m.name + 'CreateView(CreateView):'
+            string += '\n\t'
+            string += 'template_name' + '=' + "'.html'" + '\n\t'
+            string += 'model' + '=' + m.name + '\n\t'
+            string +='fields = ['
+            string1 = ''
+
+            last = len(m.elements) - 1
+            for i, element in enumerate(m.elements):
+                string += "'" + element.name + "'"
+                if i == last:
+                    string += ']'
+                else:
+                    string += ', '
+            string += '\n\t' + "success_url=reverse_lazy('')"
+            string += '\n\n'
+        return string
 
 
-    with open('migration1.py', 'w') as f:
-        a = 'asdf'
+    with open('views.py', 'w') as f:
+        a = function(model.models)
         f.write(a)

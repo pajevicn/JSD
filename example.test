@@ -1,8 +1,11 @@
+model Country{
+    id = TextField()
+    name = TextField()
+};
+
 model User{
     firstName = TextField(null = true)
     lastName = CharField(max_length = 3)
-};
-
-model Country{
-    id = TextField()
+    email =  EmailField(max_length = 30)
+    country = ForeignKey(model = Country)
 };

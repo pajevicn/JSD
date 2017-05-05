@@ -11,56 +11,67 @@
     edge[dir=black,arrowtail=empty]
 
 
-52306912 -> 52307384[arrowtail=diamond, dir=both, headlabel="models 0..*"]
-52306912[ label="{Models|}"]
+52103528 -> 52104000[arrowtail=diamond, dir=both, headlabel="models 0..*"]
+52103528[ label="{Models|}"]
 
-52307856 -> 52308328[arrowtail=diamond, dir=both, headlabel="datatype "]
-52307856[ label="{ModelElement|+name:ID\l}"]
+52104000 -> 52104472[arrowtail=diamond, dir=both, headlabel="elements 0..*"]
+52104000[ label="{Model|+name:ID\l}"]
 
-52442080[ label="{Number|[0-9]+}"]
+52104472 -> 52285488[arrowtail=diamond, dir=both, headlabel="datatype "]
+52104472[ label="{ModelElement|+name:ID\l}"]
 
-52443024[ label="{Value|true}"]
+52285488 -> 52285960[arrowtail=diamond, dir=both, headlabel="textField "]
+52285488 -> 52286432[arrowtail=diamond, dir=both, headlabel="charField "]
+52285488 -> 52286904[arrowtail=diamond, dir=both, headlabel="emailField "]
+52285488 -> 52287376[arrowtail=diamond, dir=both, headlabel="website "]
+52285488 -> 52287848[arrowtail=diamond, dir=both, headlabel="foreignkey "]
+52285488[ label="{DataType|}"]
 
-52308328 -> 52308800[arrowtail=diamond, dir=both, headlabel="textField "]
-52308328 -> 52309272[arrowtail=diamond, dir=both, headlabel="charField "]
-52308328[ label="{DataType|}"]
+52285960 -> 52288320[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
+52285960[ label="{TextField|}"]
 
-52441608[ label="{Max_Length|+number:Number\l}"]
+52286432 -> 52288320[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
+52286432[ label="{CharField|}"]
 
-52309272 -> 52441136[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
-52309272[ label="{CharField|}"]
+52286904 -> 52288320[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
+52286904[ label="{EmailField|}"]
 
-52307384 -> 52307856[arrowtail=diamond, dir=both, headlabel="elements 0..*"]
-52307384[ label="{Model|+name:ID\l}"]
+52287376 -> 52288320[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
+52287376[ label="{URLField|}"]
 
-52442552[ label="{Null|+value:Value\l}"]
+52287848[ label="{ForeignKey|+model:ID\l}"]
 
-52441136 -> 52442552[arrowtail=diamond, dir=both, headlabel="null "]
-52441136 -> 52441608[arrowtail=diamond, dir=both, headlabel="max_length "]
-52441136[ label="{Parameter|}"]
+52288320 -> 52314632[arrowtail=diamond, dir=both, headlabel="null "]
+52288320 -> 52288792[arrowtail=diamond, dir=both, headlabel="max_length "]
+52288320[ label="{Parameter|}"]
 
-52308800 -> 52441136[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
-52308800[ label="{TextField|}"]
+52288792[ label="{Max_Length|+number:Number\l}"]
 
-52295568[ label="{STRING|}"]
+52314160[ label="{Number|[0-9]+}"]
 
-52306440[ label="{BASETYPE|}"]
-52306440 -> 52305968 [dir=back]
-52306440 -> 52296040 [dir=back]
-52306440 -> 52295096 [dir=back]
-52306440 -> 52295568 [dir=back]
+52314632[ label="{Null|+value:Value\l}"]
 
-52296512[ label="{INT|}"]
+52315104[ label="{Value|true}"]
 
-52296984[ label="{FLOAT|}"]
+52095808[ label="{ID|}"]
 
-52305968[ label="{NUMBER|}"]
-52305968 -> 52296984 [dir=back]
-52305968 -> 52296512 [dir=back]
+52096280[ label="{STRING|}"]
 
-52296040[ label="{BOOL|}"]
+52101168[ label="{BOOL|}"]
 
-52295096[ label="{ID|}"]
+52101640[ label="{INT|}"]
+
+52102112[ label="{FLOAT|}"]
+
+52102584[ label="{NUMBER|}"]
+52102584 -> 52102112 [dir=back]
+52102584 -> 52101640 [dir=back]
+
+52103056[ label="{BASETYPE|}"]
+52103056 -> 52102584 [dir=back]
+52103056 -> 52101168 [dir=back]
+52103056 -> 52095808 [dir=back]
+52103056 -> 52096280 [dir=back]
 
 
 }

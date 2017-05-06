@@ -27,22 +27,20 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         graph = pydot.graph_from_dot_file(model_name + '.dot')
         # graph[0].write_png(model_name + '.png')
 
-
+    # u ovom dijelu generisemo views.py file i klase i funkcije vezane za taj fajl
     def function(model):
         string = 'from django.views import generic\nfrom django.views.generic.edit import CreateView, UpdateView, DeleteView\nfrom django.core.urlresolvers import reverse_lazy, reverse\n'
         string += '\n'
         for m in model:
             string += 'from .models import ' + m.name + '\n'
-
+        #Generator za createview
         for m in model:
             string += '\n'
-            string += 'class ' + m.name + 'CreateView(CreateView):'
+            string += 'class ' + m.name +  'CreateView(CreateView):'
             string += '\n\t'
             string += 'template_name' + '=' + "'.html'" + '\n\t'
             string += 'model' + '=' + m.name + '\n\t'
             string +='fields = ['
-            string1 = ''
-
             last = len(m.elements) - 1
             for i, element in enumerate(m.elements):
                 string += "'" + element.name + "'"
@@ -52,9 +50,44 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
                     string += ', '
             string += '\n\t' + "success_url=reverse_lazy('')"
             string += '\n\n'
+
+            # Generator za updateview
+            string += '\n'
+            string += 'class ' + m.name + 'UpdateView(UpdateView):'
+            string += '\n\t'
+            string += 'template_name' + '=' + "'.html'" + '\n\t'
+            string += 'model' + '=' + m.name + '\n\t'
+            string += 'fields = ['
+            last = len(m.elements) - 1
+            for i, element in enumerate(m.elements):
+                string +="'" + element.name + "'"
+                if i == last:
+                    string += ']'
+                else:
+                    string += ', '
+            string += '\n\n'
+
+            # Generator za deleteview
+            string += '\n'
+            string += 'class ' + m.name + 'DeleteView(DeleteView):'
+            string += '\n\t'
+            string += 'template_name' + '=' + "'.html'" + '\n\t'
+            string += 'model' + '=' + m.name + '\n\t'
+            string += "success_url=reverse_lazy('')"
+            string += '\n\n'
+
+            # Generator za listview
+            string += '\n'
+            string += 'class ' + m.name + 'ListView(generic.ListView):'
+            string += '\n\t'
+            string += 'template_name' + ' = ' + "'.html'" + '\n\t'
+            string += 'context_object_name' + ' = ' + "'" + 'all_' + m.name + "'" + '\n\t'
+            string += 'def ' + 'get_queryset(self):' + '\n\t\t'
+            string += 'return ' + m.name + '.object.all'
+            string += '\n\n'
+
         return string
-
-
     with open('views.py', 'w') as f:
         a = function(model.models)
         f.write(a)
+

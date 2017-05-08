@@ -8,14 +8,14 @@ from .models import User
 class CountryCreateView(CreateView):
 	template_name='.html'
 	model=Country
-	fields = ['id', 'name']
+	fields = ['Id', 'Name']
 	success_url=reverse_lazy('')
 
 
 class CountryUpdateView(UpdateView):
 	template_name='.html'
 	model=Country
-	fields = ['id', 'name']
+	fields = ['Id', 'Name']
 
 
 class CountryDeleteView(DeleteView):
@@ -34,14 +34,14 @@ class CountryListView(generic.ListView):
 class UserCreateView(CreateView):
 	template_name='.html'
 	model=User
-	fields = ['firstName', 'lastName', 'email', 'country']
+	fields = ['Country', 'FirstName', 'LastName', 'Email']
 	success_url=reverse_lazy('')
 
 
 class UserUpdateView(UpdateView):
 	template_name='.html'
 	model=User
-	fields = ['firstName', 'lastName', 'email', 'country']
+	fields = ['Country', 'FirstName', 'LastName', 'Email']
 
 
 class UserDeleteView(DeleteView):

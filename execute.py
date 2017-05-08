@@ -36,11 +36,11 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         #Generator za createview
         for m in model:
             string += '\n'
-            string += 'class ' + m.name +  'CreateView(CreateView):'
+            string += 'class ' + m.name + 'CreateView(CreateView):'
             string += '\n\t'
             string += 'template_name' + '=' + "'.html'" + '\n\t'
             string += 'model' + '=' + m.name + '\n\t'
-            string +='fields = ['
+            string += 'fields = ['
             last = len(m.elements) - 1
             for i, element in enumerate(m.elements):
                 string += "'" + element.name + "'"
@@ -89,5 +89,60 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         return string
     with open('views.py', 'w') as f:
         a = function(model.models)
+        f.write(a)
+
+    # u ovom dijelu generisemo models.py file, klase i funkcije vezane za taj fajl
+    def functionM(model):
+        string = 'import os\nfrom django.db import models\n'
+        string += '\n'
+        for m in model:
+            string += '\n'
+            string += 'class ' + m.name + '(models.Model):\t'
+            for i, element in enumerate(m.elements):
+                    string += '\n\t'
+                    string += element.name + " = " + "models."
+
+                    if element.datatype.foreignkey is not None:
+                        string += 'ForeignKey(' + element.name + ', ' + 'on_delete=models.CASCADE)'
+                    elif element.datatype.CharField is not None:
+                        string += 'CharField('
+                        if len(element.datatype.CharField.parameters) == 0:
+                            string += ")),"
+                        elif len(element.datatype.CharField.parameters) == 1:
+                            if element.datatype.CharField.parameters[0].max_length is not None:
+                                string += 'max_length=' + element.datatype.CharField.parameters[
+                                    0].max_length.number + "),"
+                            if element.datatype.CharField.parameters[0].null is not None:
+                                string += 'null=' + element.datatype.CharField.parameters[0].null.value + "),"
+                        elif len(element.datatype.CharField.parameters) == 3:
+                            string += 'max_length=' + element.datatype.CharField.parameters[0].max_length.number + ", "
+                            string += 'null=' + element.datatype.CharField.parameters[1].null.value + ", "
+                        elif element.datatype.CharField.parameters[0].max_length and element.datatype.CharField.parameters[1].null is not None:
+                            string += 'max_length=' + element.datatype.CharField.parameters[0].max_length.number + ", "
+                            string += 'null=' + element.datatype.CharField.parameters[1].null.value + ")"
+                    elif element.datatype.EmailField is not None:
+                        string += 'EmailField('
+
+                        if len(element.datatype.EmailField.parameters) == 0:
+                            string += ")"
+                        elif len(element.datatype.EmailField.parameters) == 1:
+                            if element.datatype.EmailField.parameters[0].max_length is not None:
+                                string += 'max_length=' + element.datatype.EmailField.parameters[0].max_length.number + '),'
+
+        return string
+    with open('models.py', 'w') as f:
+        a = functionM(model.models)
+        f.write(a)
+
+    # dio gdje se generice urls.py
+    def functionU(model):
+        string = 'from django.conf.urls import url\nfrom . import views\n'
+        string += '\n' + 'app_name = ' + "'" + 'JSD rad' + "'"
+        string += '\n\nurlpatterns = [' + '\n\n' + ']'
+
+        return string
+
+    with open('urls.py', 'w') as f:
+        a = functionU(model)
         f.write(a)
 

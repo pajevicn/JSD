@@ -13,7 +13,7 @@ ModelElement:
 ;
 
 DataType:
-    textField = TextField | charField = CharField | emailField = EmailField | website = URLField | foreignkey = ForeignKey
+    textField = TextField | CharField = CharField | EmailField = EmailField | website = URLField | foreignkey = ForeignKey
 ;
 
 TextField:
@@ -52,5 +52,5 @@ Null:
 ;
 
 Value:
-    'true'
+    'True'
 ;

@@ -134,7 +134,7 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         a = functionM(model.models)
         f.write(a)
 
-    # dio gdje se generice urls.py
+    # dio gdje se generise urls.py
     def functionU(model):
         string = 'from django.conf.urls import url\nfrom . import views\n'
         string += '\n' + 'app_name = ' + "'" + 'JSD rad' + "'"
@@ -146,3 +146,24 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         a = functionU(model)
         f.write(a)
 
+     # Kreiranje templates foldera
+    newpath = r'templates'
+    if not os.path.exists(newpath):
+            os.makedirs(newpath)
+
+    # genersianje sablona u okviru foldera templates
+    def functionB(model):
+        string = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>{% block title %} JSD PROJEKAT {% endblock %}</title>\n<body>\n{% block body %}\n{% endblock %}\n</body>\n</html>'
+
+        return string
+    with open('templates/base.html', 'w') as f:
+        a = functionB(model)
+        f.write(a)
+
+    def functionB(model):
+        string = "{% extends 'base.html' %}\n{% block title %} Prva strana {% endblock %}\n{% block body %}\n{% endblock %}"
+
+        return string
+    with open('templates/index.html', 'w') as f:
+        a = functionB(model)
+        f.write(a)

@@ -137,8 +137,9 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
     # dio gdje se generise urls.py
     def functionU(model):
         string = 'from django.conf.urls import url\nfrom . import views\n'
-        string += '\n' + 'app_name = ' + "'" + 'JSD rad' + "'"
-        string += '\n\nurlpatterns = [' + '\n\n' + ']'
+        string += '\n' + 'app_name = ' + "'" + 'JSD' + "'"
+        string += '\n\nurlpatterns = [' + '\n\n'
+        string +=']'
 
         return string
 
@@ -166,4 +167,22 @@ def execute(path, grammar_file_name, example_file_name, export_dot, export_png):
         return string
     with open('templates/index.html', 'w') as f:
         a = functionB(model)
+        f.write(a)
+
+    # generator koda za admin.py
+    def functionA(model):
+        string = 'from django.contrib import admin\n'
+        string += 'from .models import '
+        last = len(model) - 1
+        for i,model in enumerate(model):
+            string += model.name
+            if i == last:
+                string += '' + '\n'
+            else:
+                string += ', '
+        string += '' + '\n'
+        string += 'admin.site.register(' + model.name + ')'
+        return string
+    with open('admin.py', 'w') as f:
+        a = functionA(model.models)
         f.write(a)

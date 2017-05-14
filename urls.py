@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 
-app_name = 'JSD rad'
+app_name = 'JSD'
 
 urlpatterns = [
 
